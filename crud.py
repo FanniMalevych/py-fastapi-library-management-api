@@ -4,8 +4,10 @@ import schemas
 from db import models
 
 
-def get_all_authors(db: Session):
-    return db.query(models.DBAuthor).all()
+def get_all_authors(db: Session,
+                    skip: int = 0,
+                    limit: int = 5):
+    return db.query(models.DBAuthor).offset(skip).limit(limit).all()
 
 
 def get_author(db: Session, author_id: int):
@@ -28,8 +30,10 @@ def get_author_by_name(db: Session, name: str):
     return db.query(models.DBAuthor).filter(models.DBAuthor.name == name).first()
 
 
-def get_all_books(db: Session):
-    return db.query(models.DBBook).all()
+def get_all_books(db: Session,
+                  skip: int = 0,
+                  limit: int = 5):
+    return db.query(models.DBBook).offset(skip).limit(limit).all()
 
 
 def create_book(db: Session, book: schemas.BookCreate):

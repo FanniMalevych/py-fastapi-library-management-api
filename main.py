@@ -23,8 +23,10 @@ async def root():
 
 
 @app.get("/authors/", response_model=list[schemas.Author])
-def get_authors_list(db: Session = Depends(get_db)):
-    return crud.get_all_authors(db)
+def get_authors_list(db: Session = Depends(get_db),
+                     skip: int = 0,
+                     limit: int = 5):
+    return crud.get_all_authors(db, skip, limit)
 
 
 @app.post("/authors/", response_model=schemas.Author)
@@ -53,8 +55,10 @@ def get_author_details(author_id: int, db: Session = Depends(get_db)):
 
 
 @app.get("/books/", response_model=list[schemas.Book])
-def get_all_books(db: Session = Depends(get_db)):
-    return crud.get_all_books(db)
+def get_all_books(db: Session = Depends(get_db),
+                  skip: int = 0,
+                  limit: int = 5):
+    return crud.get_all_books(db, skip, limit)
 
 
 @app.post("/books/", response_model=schemas.Book)
