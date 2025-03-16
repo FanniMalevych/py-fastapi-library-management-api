@@ -8,6 +8,10 @@ def get_all_authors(db: Session):
     return db.query(models.DBAuthor).all()
 
 
+def get_author(db: Session, author_id: int):
+    return db.query(models.DBAuthor).filter(models.DBAuthor.id == author_id).first()
+
+
 def create_author(db: Session, author: schemas.AuthorCreate):
     db_author = models.DBAuthor(
         name=author.name,
@@ -44,3 +48,7 @@ def create_book(db: Session, book: schemas.BookCreate):
 
 def get_book_by_title(db: Session, title: str):
     return db.query(models.DBBook).filter(models.DBBook.title == title).first()
+
+
+def get_authors_books(db: Session, author_id: int):
+    return db.query(models.DBBook).filter(models.DBBook.author_id == author_id).all()
